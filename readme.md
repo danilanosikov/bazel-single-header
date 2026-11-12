@@ -1,9 +1,15 @@
 # okular system
-библиотека для определения окружения систем
+библиотека для работы с операционной системой
+запаковывает системные вызовы в предсказуемые обёртки
+
 # настройка 
 ```sh
-bazel run //:clangd # настройка clangd
-bazel build //:library # сборка библиотеки liblibrary.so
-bazel clean --expunge # отчистка сборки
-bazel run //:module # компиляция и запуск бинарника модуля
+# настройка clangd
+bazel run //:clangd
+
+# сборка всего
+bazel build ...
+
+# отчистка сборки
+bazel clean
 ```

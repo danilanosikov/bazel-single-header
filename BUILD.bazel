@@ -8,6 +8,6 @@ load("@rules_multirun//:defs.bzl", "command", "multirun")
 multirun(
 	name = "setup",
 	commands = [
-		":clangd"
+		"//:clangd"
 	]
 )

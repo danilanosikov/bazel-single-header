@@ -1,9 +1,3 @@
-# @описание: clangd
-load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
-refresh_compile_commands(
-    name = "clangd",
-)
-
 # @описание: компиляция
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
@@ -112,5 +106,5 @@ cc_library(
 			]
 		}),
 	includes = ["."],
-	visibility = ["//visibility:private"],
+	visibility = ["//visibility:public"],
 )

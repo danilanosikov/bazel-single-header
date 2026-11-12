@@ -1,0 +1,17 @@
+# project
+module(
+	name = "okular-system",
+	version = "12111026a0"
+)
+
+# c23/c++23 support
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "platforms", version = "1.1.0")
+
+# clangd
+bazel_dep(name = "hedron_compile_commands")
+git_override(
+    module_name = "hedron_compile_commands",
+    remote = "https://github.com/helly25/bazel-compile-commands-extractor.git",
+    commit = "078ba7675c05bea2666c92d9a8abe200d8547655",
+)

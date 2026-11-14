@@ -37,3 +37,6 @@ build --jobs=HOST_CPUS
 
 # __VA_ARGS__
 build --conlyopt=-Wno-gnu-zero-variadic-macro-arguments
+
+# отображать вывод проверки
+test --test_output=all

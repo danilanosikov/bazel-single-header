@@ -4,7 +4,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
 # @описание: библиотека распознавания особенностей системы
 cc_library(
-	name = "system",
+	name = "library",
 	srcs = select({
 			"@platforms//os:freebsd": ["backend/openbsd.c"],
 			"@platforms//os:openbsd": ["backend/freebsd.c"],
@@ -107,4 +107,11 @@ cc_library(
 		}),
 	includes = ["."],
 	visibility = ["//visibility:public"],
+)
+
+
+cc_test(
+	name = "test",
+	srcs = ["test.c"],
+	deps = [":library"]
 )

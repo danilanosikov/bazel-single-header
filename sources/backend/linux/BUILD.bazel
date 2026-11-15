@@ -26,7 +26,10 @@ genrule(
 cc_library(
 	name = "backend",
 	srcs = [
-		"linux.c",
+		"module.c",
+		"memory.c",
+		"display.c",
+		"input.c",
 		":wayland",
 	],
 	linkopts = ["-lwayland-client"],

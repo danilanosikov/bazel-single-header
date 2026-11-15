@@ -42,15 +42,15 @@
 	int oku_system_memory_queue_pop(int segment);
 
 	/* поверхность отрисовки */
-	int oku_system_surface_create();
-	int oku_system_surface_update();
-	int oku_system_surface_destroy();
+	int oku_system_display_create();
+	int oku_system_display_update();
+	int oku_system_display_destroy();
 
-	int oku_system_surface_show();
-	int oku_system_surface_hide();
-	int oku_system_surface_full();
-	int oku_system_surface_move();
-	int oku_system_surface_size();
+	int oku_system_display_show();
+	int oku_system_display_hide();
+	int oku_system_display_full();
+	int oku_system_display_move();
+	int oku_system_display_size();
 
 	/* ввод */
 	int oku_system_input_create();

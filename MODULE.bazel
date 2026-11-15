@@ -17,3 +17,13 @@ git_override(
     remote = "https://github.com/helly25/bazel-compile-commands-extractor.git",
     commit = "078ba7675c05bea2666c92d9a8abe200d8547655",
 )
+
+
+
+# wayland
+new_local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
+new_local_repository(
+    name = "wayland",
+    path = "/usr/share/wayland-protocols",
+    build_file_content = 'exports_files(glob(["**/*.xml"]))',
+)

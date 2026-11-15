@@ -1,0 +1,42 @@
+# @описание: компиляция
+load("@rules_cc//cc:defs.bzl", "cc_library")
+genrule(
+	name = "wayland",
+	srcs = [
+		"@wayland//:stable/xdg-shell/xdg-shell.xml",
+		"@wayland//:unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
+	],
+	outs = [
+		"xdg-shell.h",
+		"xdg-decoration.h",
+		"xdg-shell.c",
+		"xdg-decoration.c",
+	],
+	cmd = """
+		for xml in $(SRCS); do
+			out=$$(basename "$$xml" .xml)
+			out=$${out%-unstable-v*}
+			wayland-scanner client-header "$$xml" "$(@D)/$$out.h"
+			wayland-scanner private-code "$$xml" "$(@D)/$$out.c"
+		done
+	""",
+)
+
+# @описание: библиотека распознавания особенностей системы
+cc_library(
+	name = "backend",
+	srcs = [
+		"linux.c",
+		":wayland",
+	],
+	linkopts = ["-lwayland-client"],
+	defines = [
+		"oku_system=linux",
+		"oku_system_family=unix",
+		"oku_system_type=universal",
+		"oku_system_libre=true"
+	],
+	deps = ["//sources:headers", ":wayland"],
+	includes = ["."],
+	visibility = ["//sources:__subpackages__"],
+)

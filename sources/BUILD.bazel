@@ -1,117 +1,36 @@
 # @описание: компиляция
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
-
 # @описание: библиотека распознавания особенностей системы
 cc_library(
-	name = "library",
-	srcs = select({
-			"@platforms//os:freebsd": ["backend/openbsd.c"],
-			"@platforms//os:openbsd": ["backend/freebsd.c"],
-			"@platforms//os:netbsd": ["backend/netbsd.c"],
-			# "@platforms//os:dragonflybsd": ["backend/dragonflybsd.c"],
-			"@platforms//os:linux": ["backend/linux.c"],
-			"@platforms//os:android": ["backend/android.c"],
-			"@platforms//os:macos": ["backend/apple/macos.c"],
-			"@platforms//os:ios": ["backend/apple/ios.c"],
-			"@platforms//os:tvos": ["backend/apple/tvos.c"],
-			"@platforms//os:watchos": ["backend/apple/watchos.c"],
-			"@platforms//os:windows": ["backend/windows.c"]
-		}),
-	hdrs = ["system.h"],
-
-	defines =
+	name = "headers",
+	hdrs = ["system.h", "error.h"],
+	defines = select({
 		# определение компилятора
-		select({
-			"@rules_cc//cc/compiler:clang": ["oku_system_compiler=clang"],
-			"@rules_cc//cc/compiler:clang-cl": ["oku_system_compiler=clang"],
-			"@rules_cc//cc/compiler:gcc": ["oku_system_compiler=gcc"],
-			"@rules_cc//cc/compiler:msvc-cl": ["oku_system_compiler=msvc"],
-			"//conditions:default": ["oku_system_compiler=unknown"]
-		})
-		+
-		# определение операционной системы
-		select({
-			"@platforms//os:freebsd": [
-				"oku_system=freebsd",
-				"oku_system_family=unix",
-				"oku_system_type=universal",
-				"oku_system_libre=true"
-			],
-			"@platforms//os:openbsd": [
-				"oku_system=openbsd",
-				"oku_system_family=unix",
-				"oku_system_type=universal",
-				"oku_system_libre=true"
-			],
-			"@platforms//os:netbsd": [
-				"oku_system=netbsd",
-				"oku_system_family=unix",
-				"oku_system_type=universal",
-				"oku_system_libre=true"
-			],
-			# "@platforms//os:dragonflybsd": [
-			# 	"oku_system=dragonflybsd",
-			# 	"oku_system_family=unix",
-			# 	"oku_system_type=universal",
-			# 	"oku_system_libre=true"
-			# ],
-			"@platforms//os:linux": [
-				"oku_system=linux",
-				"oku_system_family=unix",
-				"oku_system_type=universal",
-				"oku_system_libre=true"
-			],
-			"@platforms//os:android": [
-				"oku_system=android",
-				"oku_system_family=unix",
-				"oku_system_type=mobile",
-				"oku_system_libre=true"
-			],
-			"@platforms//os:macos": [
-				"oku_system=apple_macos",
-				"oku_system_family=unix",
-				"oku_system_type=desktop",
-				"oku_system_libre=false"
-			],
-			"@platforms//os:ios": [
-				"oku_system=apple",
-				"oku_system_family=unix",
-				"oku_system_type=mobile",
-				"oku_system_libre=false"
-			],
-			"@platforms//os:tvos": [
-				"oku_system=apple",
-				"oku_system_family=unix",
-				"oku_system_type=tv",
-				"oku_system_libre=false"
-			],
-			"@platforms//os:watchos": [
-				"oku_system=apple",
-				"oku_system_family=unix",
-				"oku_system_type=watch",
-				"oku_system_libre=false"
-			],
-			"@platforms//os:windows": [
-				"oku_system=windows",
-				"oku_system_family=dos",
-				"oku_system_type=desktop",
-				"oku_system_libre=false"
-			],
-			"//conditions:default": [
-				"oku_system=unknown",
-				"oku_system_family=unknown",
-				"oku_system_type=unknown",
-				"oku_system_libre=unknown"
-			]
-		}),
+		"@rules_cc//cc/compiler:clang": ["oku_system_compiler=clang"],
+		"@rules_cc//cc/compiler:clang-cl": ["oku_system_compiler=clang"],
+		"@rules_cc//cc/compiler:gcc": ["oku_system_compiler=gcc"],
+		"@rules_cc//cc/compiler:msvc-cl": ["oku_system_compiler=msvc"],
+		"//conditions:default": ["oku_system_compiler=unknown"],
+	}),
 	includes = ["."],
-	visibility = ["//visibility:public"],
+	visibility = ["//sources:__subpackages__"],
 )
 
-
+cc_library(
+	name = "library",
+	deps = [":headers"] + select({
+		"@platforms//os:linux": ["//sources/backend/linux:backend"],
+	}),
+	visibility = ["//visibility:public"],
+)
 cc_test(
 	name = "test",
 	srcs = ["test.c"],
-	deps = [":library"]
+	deps = [":library"],
+)
+cc_binary(
+	name = "example",
+	srcs = ["run.c"],
+	deps = [":library"],
 )

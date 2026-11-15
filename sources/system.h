@@ -11,13 +11,50 @@
 	// обновляет состояние модуля и опрашивает его подсистемы
 	int oku_system_update();
 
-
-
-	// запрашивает память у модуля
-	int oku_system_memory_get();
-	// задаёт значение памяти
-	int oku_system_memory_set();
+	/* память */
+	// запрашивает память у модуля, возвращает номер куска памяти или ошибку
+	int oku_system_memory_reserve(unsigned int bytes, size_t chunk_size_in_bytes);
 	// отдаёт память обратно модулю 	
-	int oku_system_memory_put();
+	int oku_system_memory_return(int segment);
+
+	// работа с памятью как с кучей
+	int oku_system_memory_heap_put(int segment, int offset, void *buffer);
+	int oku_system_memory_heap_get_last(int segment, void *buffer);
+	int oku_system_memory_heap_get_first(int segment, void *buffer);
+	int oku_system_memory_heap_get(int segment, int offset, void *buffer);
+	int oku_system_memory_heap_set(int segment, int offset, void *buffer);
+	int oku_system_memory_heap_pop(int segment, int offset);
+
+	// работа с памятью как со стопкой
+	int oku_system_memory_stack_put(int segment, void *buffer);
+	int oku_system_memory_stack_get_last(int segment, void *buffer);
+	int oku_system_memory_stack_get_first(int segment, void *buffer);
+	int oku_system_memory_stack_get(int segment, int offset, void *buffer);
+	int oku_system_memory_stack_set(int segment, void *buffer);
+	int oku_system_memory_stack_pop(int segment);
+
+	// работа с памятью как с очередью
+	int oku_system_memory_queue_put(int segment, void *buffer);
+	int oku_system_memory_queue_get_first(int segment, void *buffer);
+	int oku_system_memory_queue_get_last(int segment, void *buffer);
+	int oku_system_memory_queue_get(int segment, int offset, void *buffer);
+	int oku_system_memory_queue_set(int segment, void *buffer);
+	int oku_system_memory_queue_pop(int segment);
+
+	/* поверхность отрисовки */
+	int oku_system_surface_create();
+	int oku_system_surface_update();
+	int oku_system_surface_destroy();
+
+	int oku_system_surface_show();
+	int oku_system_surface_hide();
+	int oku_system_surface_full();
+	int oku_system_surface_move();
+	int oku_system_surface_size();
+
+	/* ввод */
+	int oku_system_input_create();
+	int oku_system_input_update();
+	int oku_system_input_destroy();
 	#define oku__system
 #endif

@@ -22,6 +22,9 @@ genrule(
 	""",
 )
 
+
+
+
 # @описание: библиотека распознавания особенностей системы
 cc_library(
 	name = "backend",
@@ -32,12 +35,17 @@ cc_library(
 		"input.c",
 		":wayland",
 	],
+	hdrs = [
+		"@rgfw//file",
+	],
 	linkopts = ["-lwayland-client"],
 	defines = [
 		"oku_system=linux",
 		"oku_system_family=unix",
 		"oku_system_type=universal",
-		"oku_system_libre=true"
+		"oku_system_libre=true",
+		"RGFW_WAYLAND",
+		"RGFW_VULKAN",
 	],
 	deps = ["//sources:headers", ":wayland"],
 	includes = ["."],

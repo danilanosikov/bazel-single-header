@@ -6,27 +6,12 @@
 
 	// состояние инициализации модуля
 	extern bool initialized;
-
-
-
-
-
-
-
 	// подготавливает модуль к работе
 	int oku_system_create(size_t memory);
 	// подготавливает модуль к завершению работы
 	int oku_system_destroy();
 	// обновляет состояние модуля и опрашивает его подсистемы
 	int oku_system_update();
-
-
-
-
-
-
-
-
 
 	/* память */
 	int oku_system_memory_create(size_t bytes);
@@ -57,21 +42,6 @@
 	int oku_system_memory_queue_set(int segment, void *buffer);
 	int oku_system_memory_queue_pop(int segment);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/* вывод */
 	int oku_system_display_create();
 	int oku_system_display_update();
@@ -82,22 +52,9 @@
 	int oku_system_display_move();
 	int oku_system_display_size();
 
-
-
-
-
-
-
-
-
-
 	/* ввод */
 	int oku_system_input_create();
 	int oku_system_input_update();
 	int oku_system_input_destroy();
-
-
-
-
 	#define oku__system
 #endif

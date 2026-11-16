@@ -1,22 +1,27 @@
 #include <system.h>
 #include <error.h>
+#include <rgfw.h>
 
 /* поверхность */
-#ifndef okd__wayland_client
+#ifndef okd_wayland_client
 	#include <wayland-client.h>
-	#define okd__wayland_client okd__wayland_client
+	#define okd_wayland_client okd_wayland_client
 #endif
 
-#ifndef okd__xdg_shell
+#ifndef okd_xdg_shell
 	#include <xdg-shell.h>
-	#define okd__xdg_shell okd__xdg_shell
+	#define okd_xdg_shell okd_xdg_shell
 #endif
 
-// #ifndef okd__xdg_decoration
+// #ifndef okd_xdg_decoration
 //     #include <xdg-decoration.h>
-//     #define okd__xdg_decoration
+//     #define okd_xdg_decoration
 // #endif
 
+#ifndef okd_string
+	#include <string.h>
+	#define okd_string okd_string
+#endif
 int oku_system_display_create() {
 	if(initialized) return oku_system_error_initialized;
 	return 0;

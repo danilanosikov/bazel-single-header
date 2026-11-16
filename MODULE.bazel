@@ -8,6 +8,7 @@ module(
 # расширение функций для подключения зависимостей
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+single_header = use_repo_rule("//tools:single_header.bzl", "single_header")
 new_local_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
 
 
@@ -34,9 +35,10 @@ new_local_repository(
 )
 
 
-http_file(
+
+single_header(
 	name = "rgfw",
-	downloaded_file_path = "rgfw.h",
-	urls = ["https://github.com/ColleagueRiley/RGFW/releases/download/1.8.1/RGFW.h"],
+	header = "rgfw.h",
+	url = "https://github.com/ColleagueRiley/RGFW/releases/download/1.8.1/RGFW.h",
 	sha256 = "ece357894cf1e5d178c5343d877c4b8c66e6d0a42164b2b2e49220142700448d",
 )

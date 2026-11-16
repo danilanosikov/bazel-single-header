@@ -4,12 +4,24 @@ genrule(
 	srcs = [
 		"@wayland//:stable/xdg-shell/xdg-shell.xml",
 		"@wayland//:unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
+		"@wayland//:staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+		"@wayland//:unstable/relative-pointer/relative-pointer-unstable-v1.xml",
+		"@wayland//:unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
+		"@wayland//:unstable/xdg-output/xdg-output-unstable-v1.xml",
 	],
 	outs = [
 		"xdg-shell.h",
-		"xdg-decoration.h",
 		"xdg-shell.c",
-		"xdg-decoration.c",
+		"xdg-toplevel-icon-v1.h",
+		"xdg-toplevel-icon-v1.c",
+		"xdg-decoration-unstable-v1.h",
+		"xdg-decoration-unstable-v1.c",
+		"relative-pointer-unstable-v1.h",
+		"relative-pointer-unstable-v1.c",
+		"pointer-constraints-unstable-v1.h",
+		"pointer-constraints-unstable-v1.c",
+		"xdg-output-unstable-v1.h",
+		"xdg-output-unstable-v1.c",
 	],
 	cmd = """
 		for xml in $(SRCS); do
@@ -30,7 +42,12 @@ cc_library(
 		"input.c",
 		":wayland",
 	],
-	linkopts = ["-lwayland-client"],
+	linkopts = [
+		"-lwayland-client",
+		"-lwayland-cursor",
+		"-lxkbcommon",
+		"-lvulkan",
+	],
 	defines = [
 		"oku_system=linux",
 		"oku_system_family=unix",
@@ -38,6 +55,7 @@ cc_library(
 		"oku_system_libre=true",
 		"RGFW_WAYLAND",
 		"RGFW_VULKAN",
+		"RGFW_IMPLEMENTATION",
 	],
 	deps = [
 		"//sources:headers",

@@ -2,12 +2,12 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 genrule(
 	name = "wayland",
 	srcs = [
-		"@wayland//:stable/xdg-shell/xdg-shell.xml",
-		"@wayland//:unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
-		"@wayland//:staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
-		"@wayland//:unstable/relative-pointer/relative-pointer-unstable-v1.xml",
-		"@wayland//:unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
-		"@wayland//:unstable/xdg-output/xdg-output-unstable-v1.xml",
+		"@wayland_protocols//:stable/xdg-shell/xdg-shell.xml",
+		"@wayland_protocols//:unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
+		"@wayland_protocols//:staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+		"@wayland_protocols//:unstable/relative-pointer/relative-pointer-unstable-v1.xml",
+		"@wayland_protocols//:unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
+		"@wayland_protocols//:unstable/xdg-output/xdg-output-unstable-v1.xml",
 	],
 	outs = [
 		"xdg-shell.h",
@@ -26,7 +26,6 @@ genrule(
 	cmd = """
 		for xml in $(SRCS); do
 			out=$$(basename "$$xml" .xml)
-			out=$${out%-unstable-v*}
 			wayland-scanner client-header "$$xml" "$(@D)/$$out.h"
 			wayland-scanner private-code "$$xml" "$(@D)/$$out.c"
 		done
@@ -48,6 +47,7 @@ cc_library(
 		"-lxkbcommon",
 		"-lvulkan",
 	],
+	copts = ["-Wno-static-in-inline"],
 	defines = [
 		"oku_system=linux",
 		"oku_system_family=unix",
@@ -61,6 +61,7 @@ cc_library(
 		"//sources:headers",
 		":wayland",
 		"@rgfw//:rgfw",
+		"@vulkan_headers//:vulkan",
 	],
 	includes = ["."],
 	visibility = ["//sources:__subpackages__"],

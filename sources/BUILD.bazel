@@ -28,6 +28,13 @@ cc_test(
 	name = "test",
 	srcs = ["test.c"],
 	deps = [":library"],
+	env_inherit = [
+		"DISPLAY",
+		"WAYLAND_DISPLAY",
+		"XDG_RUNTIME_DIR",
+		"XAUTHORITY",
+	],
+	tags = ["local"],
 )
 cc_binary(
 	name = "example",

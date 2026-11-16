@@ -45,5 +45,10 @@ int main(void)
 		printf("%s\n", "[ошибка]: повторное уничтожение модуля прошло успешно, хотя должно было провалиться");
 		return -1;
 	}
+
+
+	oku_system_create(4096);
+	oku_system_update();
+	oku_system_destroy();
 	return 0;
 }

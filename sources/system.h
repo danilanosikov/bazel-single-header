@@ -48,7 +48,8 @@
 	int oku_system_display_destroy();
 	int oku_system_display_show();
 	int oku_system_display_hide();
-	int oku_system_display_full();
+	int oku_system_display_fullscreen();
+	int oku_system_display_windowed();
 	int oku_system_display_move();
 	int oku_system_display_size();
 

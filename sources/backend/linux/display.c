@@ -16,7 +16,7 @@ int oku_system_display_create() {
 int oku_system_display_update() {
 	if(!initialized) return oku_system_error_uninitialized;
 	if(!window) return oku_system_error_display;
-	while(true) {
+	while(!RGFW_window_shouldClose(window)) {
 		RGFW_pollEvents();
 		if(RGFW_isKeyPressed(RGFW_escape)) break;
 	}
@@ -25,7 +25,7 @@ int oku_system_display_update() {
 int oku_system_display_destroy() {
 	if(!initialized) return oku_system_error_uninitialized;
 	if(!window) return oku_system_error_display;
-	RGFW_window_setShouldClose(window, true);
+	RGFW_window_close(window);
 	window = NULL;
 	return 0;
 }

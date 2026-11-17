@@ -47,8 +47,21 @@ int main(void)
 	}
 
 
-	oku_system_create(4096);
-	oku_system_update();
-	oku_system_destroy();
+	if(0!=oku_system_create(4096))
+	{
+		printf("%s\n", "[ошибка]: создание модуля провалилось");
+		return -1;
+	}
+	if(0!=oku_system_display_update())
+	{
+		printf("%s\n", "[ошибка]: обновление отображения провалилось");
+		oku_system_destroy();
+		return -1;
+	}
+	if(0!=oku_system_destroy())
+	{
+		printf("%s\n", "[ошибка]: уничтожение модуля провалилось");
+		return -1;
+	}
 	return 0;
 }

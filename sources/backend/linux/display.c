@@ -16,9 +16,9 @@ int oku_system_display_create() {
 int oku_system_display_update() {
 	if(!initialized) return oku_system_error_uninitialized;
 	if(!window) return oku_system_error_display;
-	while(!RGFW_window_shouldClose(window)) {
+	while(true) {
 		RGFW_pollEvents();
-		if(RGFW_isKeyPressed(RGFW_escape)) break;;
+		if(RGFW_isKeyPressed(RGFW_escape)) break;
 	}
 	return 0;
 }

@@ -4,6 +4,13 @@
 		#define okd__stdlib
 	#endif
 
+	/* проверки состояния модуля: включаются только в тестовой сборке (//library:library_test) */
+	#ifdef oku_system_test
+		#define oku_system_guard(condition, error) do { if(condition) return error; } while(0)
+	#else
+		#define oku_system_guard(condition, error) ((void)0)
+	#endif
+
 	/* модуль */
 	// состояние инициализации модуля
 	extern bool created;

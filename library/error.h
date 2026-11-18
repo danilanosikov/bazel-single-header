@@ -10,6 +10,9 @@
 		oku_system_error_update = -__LINE__,
 		oku_system_error_updated = -__LINE__,
 
+		oku_system_error_exit = -__LINE__,
+		oku_system_error_exited = -__LINE__,
+
 		oku_system_error_memory = -__LINE__,
 		oku_system_error_display = -__LINE__,
 		oku_system_error_input = -__LINE__,

@@ -1,5 +1,5 @@
 # @описание: компиляция
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 # @описание: библиотека распознавания особенностей системы
 cc_library(
@@ -24,8 +24,12 @@ cc_library(
 	}),
 	visibility = ["//visibility:public"],
 )
-cc_binary(
-	name = "example",
-	srcs = ["run.c"],
-	deps = [":library"],
+
+# @описание: библиотека с проверками состояния для тестирования
+cc_library(
+	name = "library_test",
+	deps = [":headers"] + select({
+		"@platforms//os:linux": ["//library/backend/linux:backend_test"],
+	}),
+	visibility = ["//test:__subpackages__"],
 )

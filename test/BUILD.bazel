@@ -1,15 +1,38 @@
 # @описание: тестирование
 load("@rules_cc//cc:defs.bzl", "cc_test")
 
+_COMMON = [
+	"common.c",
+	"common.h",
+]
+
+_ENV = [
+	"DISPLAY",
+	"WAYLAND_DISPLAY",
+	"XDG_RUNTIME_DIR",
+	"XAUTHORITY",
+]
+
 cc_test(
-	name = "test",
-	srcs = ["test.c"],
-	deps = ["//library:library"],
-	env_inherit = [
-		"DISPLAY",
-		"WAYLAND_DISPLAY",
-		"XDG_RUNTIME_DIR",
-		"XAUTHORITY",
-	],
+	name = "create",
+	srcs = _COMMON + ["create.c"],
+	deps = ["//library:library_test"],
+	env_inherit = _ENV,
+	tags = ["local"],
+)
+
+cc_test(
+	name = "update",
+	srcs = _COMMON + ["update.c"],
+	deps = ["//library:library_test"],
+	env_inherit = _ENV,
+	tags = ["local"],
+)
+
+cc_test(
+	name = "destroy",
+	srcs = _COMMON + ["destroy.c"],
+	deps = ["//library:library_test"],
+	env_inherit = _ENV,
 	tags = ["local"],
 )

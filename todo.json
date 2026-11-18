@@ -1,0 +1,3 @@
+[
+	"encapsulate all initialized/created logic guards into preprocessor guards to include this check only for testing and debugging, to fail tests when trying to call module before correctly [de]intitializing it"
+]

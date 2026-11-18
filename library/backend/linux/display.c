@@ -13,6 +13,14 @@ int oku_system_display_create() {
 	if(!window) return oku_system_error_display;
 	return 0;
 }
+#ifdef oku_system_test
+// имитация нажатия кнопки закрытия окна
+int oku_system_test_display_close() {
+	if(!window) return oku_system_error_display;
+	RGFW_window_setShouldClose(window, RGFW_TRUE);
+	return 0;
+}
+#endif
 int oku_system_display_update() {
 	oku_system_guard(!created, oku_system_error_uninitialized);
 	if(!window) return oku_system_error_display;

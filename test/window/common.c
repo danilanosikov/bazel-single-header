@@ -10,7 +10,9 @@ int on_create() {
 
 int on_update() {
 	// if (0>oku_system_memory_update()) return oku_system_error_memory;
-	if (0>oku_system_display_update()) return oku_system_error_display;
+	int result = oku_system_display_update();
+	if(result==oku_system_error_exit) return oku_system_error_exit;
+	if(0>result) return oku_system_error_display;
 	if (0>oku_system_input_update()) return oku_system_error_input;
 	return 0;
 }

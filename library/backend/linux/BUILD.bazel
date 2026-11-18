@@ -64,24 +64,18 @@ _BACKEND_DEPS = [
 	"@vulkan_headers//:vulkan",
 ]
 
+filegroup(
+	name = "backend_sources",
+	srcs = _BACKEND_SRCS,
+	visibility = ["//visibility:public"],
+)
+
 cc_library(
 	name = "backend",
 	srcs = _BACKEND_SRCS,
 	linkopts = _BACKEND_LINKOPTS,
 	copts = ["-Wno-static-in-inline"],
 	defines = _BACKEND_DEFINES,
-	deps = _BACKEND_DEPS,
-	includes = ["."],
-	visibility = ["//library:__subpackages__"],
-)
-
-# проверки состояния модуля включены только в этой сборке
-cc_library(
-	name = "backend_test",
-	srcs = _BACKEND_SRCS,
-	linkopts = _BACKEND_LINKOPTS,
-	copts = ["-Wno-static-in-inline"],
-	defines = _BACKEND_DEFINES + ["oku_system_test"],
 	deps = _BACKEND_DEPS,
 	includes = ["."],
 	visibility = ["//library:__subpackages__"],

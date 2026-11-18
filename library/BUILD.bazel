@@ -14,7 +14,10 @@ cc_library(
 		"//conditions:default": ["oku_system_compiler=unknown"],
 	}),
 	includes = ["."],
-	visibility = ["//library:__subpackages__"],
+	visibility = [
+		"//library:__subpackages__",
+		"//test:__subpackages__",
+	],
 )
 
 cc_library(
@@ -23,13 +26,4 @@ cc_library(
 		"@platforms//os:linux": ["//library/backend/linux:backend"],
 	}),
 	visibility = ["//visibility:public"],
-)
-
-# @описание: библиотека с проверками состояния для тестирования
-cc_library(
-	name = "library_test",
-	deps = [":headers"] + select({
-		"@platforms//os:linux": ["//library/backend/linux:backend_test"],
-	}),
-	visibility = ["//test:__subpackages__"],
 )

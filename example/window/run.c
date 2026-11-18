@@ -36,11 +36,16 @@ int main(void)
 		printf("%s\n", "[ошибка]: создание модуля провалилось");
 		return -1;
 	}
-	if(0!=oku_system_update())
+	while(true)
 	{
-		printf("%s\n", "[ошибка]: обновление отображения провалилось");
-		return -1;
+		switch(oku_system_update()) {
+			case 0: case oku_system_error_exit: goto loop;
+			default: goto exit;
+		}
+		loop:
 	}
+	exit:
+
 	if(0!=oku_system_destroy())
 	{
 		printf("%s\n", "[ошибка]: уничтожение модуля провалилось");

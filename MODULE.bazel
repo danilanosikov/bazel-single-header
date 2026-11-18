@@ -7,7 +7,7 @@ module(
 
 # расширение функций для подключения зависимостей
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-single_header = use_repo_rule("//tools:single_header.bzl", "single_header")
+single_header = use_repo_rule("//tool:single_header.bzl", "single_header")
 
 
 

@@ -1,1 +1,1 @@
-{"version":1,"last_command":{"label":"Bazel Run: //example:example","type":"cmd","value":"AsyncRun -cwd=/home/danila/project/okular-system -mode=term -pos=bottom -rows=10 bazel run //example:example"}}
+{"version":1,"last_command":{"label":"Bazel: Test All (//...)","type":"cmd","value":"AsyncRun -cwd=/home/danila/project/okular-system bazel test //..."}}

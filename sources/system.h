@@ -4,14 +4,25 @@
 		#define okd__stdlib
 	#endif
 
+	/* модуль */
 	// состояние инициализации модуля
-	extern bool initialized;
+	extern bool created;
+
+	// вызоваемая функция
+	typedef typeof(int(void)) *callback;
+
 	// подготавливает модуль к работе
-	int oku_system_create(size_t memory);
+	int oku_system_create(callback on_create, callback on_destroy, callback on_update);
 	// подготавливает модуль к завершению работы
 	int oku_system_destroy();
 	// обновляет состояние модуля и опрашивает его подсистемы
 	int oku_system_update();
+
+
+
+
+
+
 
 	/* память */
 	int oku_system_memory_create(size_t bytes);

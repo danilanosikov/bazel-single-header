@@ -12,7 +12,7 @@
 	typedef typeof(int(void)) *callback;
 
 	// подготавливает модуль к работе
-	int oku_system_create(callback on_create, callback on_destroy, callback on_update);
+	int oku_system_create(callback on_create, callback on_update, callback on_destroy);
 	// подготавливает модуль к завершению работы
 	int oku_system_destroy();
 	// обновляет состояние модуля и опрашивает его подсистемы

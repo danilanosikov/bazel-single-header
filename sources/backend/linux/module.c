@@ -7,7 +7,7 @@ static callback create;
 static callback update;
 static callback destroy;
 
-int oku_system_create(callback on_create, callback on_destroy, callback on_update) {
+int oku_system_create(callback on_create, callback on_update, callback on_destroy) {
 	if(created) return oku_system_error_created;
 	create = on_create;
 	update = on_update;

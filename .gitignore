@@ -141,3 +141,13 @@ dkms.conf
 *.dwo
 
 **/compile_commands.json
+
+.vim
+.vim/
+**/.vim
+**/.vim/
+
+.vim-*
+.vim-*/
+**/.vim-*
+**/.vim-*/

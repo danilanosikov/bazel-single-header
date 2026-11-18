@@ -45,6 +45,8 @@ int main(void) {
 	// тестирование
 
 
+	// test escape exit
+	// test ui close button exit
 
 
 	// деинициализация

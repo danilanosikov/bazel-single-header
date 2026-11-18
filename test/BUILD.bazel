@@ -1,0 +1,15 @@
+# @описание: тестирование
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+	name = "test",
+	srcs = ["test.c"],
+	deps = ["//library:library"],
+	env_inherit = [
+		"DISPLAY",
+		"WAYLAND_DISPLAY",
+		"XDG_RUNTIME_DIR",
+		"XAUTHORITY",
+	],
+	tags = ["local"],
+)

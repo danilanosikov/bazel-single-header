@@ -1,5 +1,5 @@
 # @описание: компиляция
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 # @описание: библиотека распознавания особенностей системы
 cc_library(
@@ -14,27 +14,15 @@ cc_library(
 		"//conditions:default": ["oku_system_compiler=unknown"],
 	}),
 	includes = ["."],
-	visibility = ["//sources:__subpackages__"],
+	visibility = ["//library:__subpackages__"],
 )
 
 cc_library(
 	name = "library",
 	deps = [":headers"] + select({
-		"@platforms//os:linux": ["//sources/backend/linux:backend"],
+		"@platforms//os:linux": ["//library/backend/linux:backend"],
 	}),
 	visibility = ["//visibility:public"],
-)
-cc_test(
-	name = "test",
-	srcs = ["test.c"],
-	deps = [":library"],
-	env_inherit = [
-		"DISPLAY",
-		"WAYLAND_DISPLAY",
-		"XDG_RUNTIME_DIR",
-		"XAUTHORITY",
-	],
-	tags = ["local"],
 )
 cc_binary(
 	name = "example",

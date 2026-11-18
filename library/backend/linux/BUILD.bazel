@@ -58,11 +58,11 @@ cc_library(
 		"RGFW_IMPLEMENTATION",
 	],
 	deps = [
-		"//sources:headers",
+		"//library:headers",
 		":wayland",
 		"@rgfw//:rgfw",
 		"@vulkan_headers//:vulkan",
 	],
 	includes = ["."],
-	visibility = ["//sources:__subpackages__"],
+	visibility = ["//library:__subpackages__"],
 )

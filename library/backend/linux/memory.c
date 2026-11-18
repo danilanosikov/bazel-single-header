@@ -15,7 +15,7 @@ static size_t mem_size;
 
 /* память */
 int oku_system_memory_create(size_t bytes) {
-	oku_system_guard(created, oku_system_error_initialized);
+	oku_system_guard(created, oku_system_error_created);
 
 	static void* result;
 	result = mmap(NULL, bytes, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -27,7 +27,7 @@ int oku_system_memory_create(size_t bytes) {
 	return 0;
 }
 int oku_system_memory_destroy() {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 
 	static int result;
 	result = munmap(mem, mem_size);
@@ -40,90 +40,90 @@ int oku_system_memory_destroy() {
 
 // запрашивает память у модуля, возвращает номер куска памяти или ошибку
 int oku_system_memory_reserve(unsigned int bytes, size_t chunk_size_in_bytes) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 
 // отдаёт память обратно модулю 	
 int oku_system_memory_return(int segment) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 
 // работа с памятью как с кучей
 int oku_system_memory_heap_put(int segment, int offset, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_heap_get_last(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_heap_get_first(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_heap_get(int segment, int offset, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_heap_set(int segment, int offset, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_heap_pop(int segment, int offset) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 
 // работа с памятью как со стопкой
 int oku_system_memory_stack_put(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_stack_get_last(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_stack_get_first(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_stack_get(int segment, int offset, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_stack_set(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_stack_pop(int segment) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 
 // работа с памятью как с очередью
 int oku_system_memory_queue_put(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_queue_get_first(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_queue_get_last(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_queue_get(int segment, int offset, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_queue_set(int segment, void *buffer) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }
 int oku_system_memory_queue_pop(int segment) {
-	oku_system_guard(!created, oku_system_error_uninitialized);
+	oku_system_guard(!created, oku_system_error_destroyed);
 	return 0;
 }

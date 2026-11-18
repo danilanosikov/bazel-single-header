@@ -16,7 +16,9 @@ int create()
 int update()
 {
 	// if (0>oku_system_memory_update()) return oku_system_error_memory;
-	if (0>oku_system_display_update()) return oku_system_error_display;
+	int result = oku_system_display_update();
+	if(result==oku_system_exit_window) return oku_system_exit_window;
+	if(0>result) return oku_system_error_display;
 	if (0>oku_system_input_update()) return oku_system_error_input;
 	return 0;	
 }
@@ -36,16 +38,14 @@ int main(void)
 		printf("%s\n", "[ошибка]: создание модуля провалилось");
 		return -1;
 	}
-	while(true)
-	{
-		switch(oku_system_update()) {
-			case 0: case oku_system_error_exit: goto loop;
-			default: goto exit;
-		}
-		loop:
-	}
-	exit:
+	int reason = oku_system_update();
+	while(0==reason) reason = oku_system_update();
 
+	if(reason<0 || (reason & oku_system_exit_error))
+	{
+		printf("%s\n", "[ошибка]: обновление модуля провалилось");
+		return -1;
+	}
 	if(0!=oku_system_destroy())
 	{
 		printf("%s\n", "[ошибка]: уничтожение модуля провалилось");

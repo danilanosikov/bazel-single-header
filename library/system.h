@@ -15,8 +15,26 @@
 	// состояние инициализации модуля
 	extern bool created;
 
-	// вызоваемая функция
+	// вызоваемая функция: 0 - продолжить, oku_system_exit_* - причина выхода, <0 - ошибка
 	typedef typeof(int(void)) *callback;
+
+	// причины выхода: битовые флаги, проверяются одним сравнением
+	typedef enum {
+		oku_system_exit_none   = 0,
+		oku_system_exit_error  = 1u << 0, // ошибка подсистемы
+		oku_system_exit_input  = 1u << 1, // escape / ввод пользователя
+		oku_system_exit_signal = 1u << 2, // SIGTERM, SIGINT, SIGHUP
+		oku_system_exit_window = 1u << 3, // кнопка закрытия окна
+		oku_system_exit_user   = 1u << 4, // выход запрошен из on_update
+		oku_system_exit_all    = (1u << 5) - 1,
+	} oku_system_exit;
+
+	typedef unsigned oku_system_exit_state;
+
+	// текущие флаги выхода: одно relaxed-чтение, 0 - выхода нет
+	oku_system_exit_state oku_system_exit_state_get();
+	// выставить флаг выхода (безопасно из обработчика сигнала)
+	void oku_system_exit_raise(oku_system_exit flag);
 
 	// подготавливает модуль к работе
 	int oku_system_create(callback on_create, callback on_update, callback on_destroy);

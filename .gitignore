@@ -8,8 +8,8 @@
 /external
 
 /compile_commands.json
-.vim
-.vim/
+/.vim
+/.vim/
 
 # Directories for the Bazel IntelliJ plugin containing the generated
 # IntelliJ project files and plugin configuration. Separate directories are

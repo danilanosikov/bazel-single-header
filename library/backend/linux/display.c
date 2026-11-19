@@ -26,6 +26,26 @@ int oku_system_test_display_close() {
 	RGFW_window_setShouldClose(window, RGFW_TRUE);
 	return 0;
 }
+// тестовые хуки для наблюдения за состоянием окна (только для тестовой сборки)
+int oku_system_test_display_hidden_get() {
+	if(!window) return oku_system_error_display;
+	return (window->internal.flags & RGFW_windowHide) ? 1 : 0;
+}
+int oku_system_test_display_mode_get() {
+	if(!window) return oku_system_error_display;
+	if(window->internal.flags & RGFW_windowFullscreen) return 1; // эксклюзивный полноэкранный режим
+	if((window->internal.flags & RGFW_windowedFullscreen) == RGFW_windowedFullscreen) return 2; // безрамочный режим
+	return 0; // обычное окно
+}
+int oku_system_test_display_geometry_get(int *x, int *y, int *w, int *h) {
+	if(!window) return oku_system_error_display;
+	if(!x || !y || !w || !h) return oku_system_error_display;
+	*x = window->x;
+	*y = window->y;
+	*w = window->w;
+	*h = window->h;
+	return 0;
+}
 #endif
 int oku_system_display_update() {
 	oku_system_guard(!created, oku_system_error_destroyed);
@@ -55,27 +75,44 @@ int oku_system_display_destroy() {
 
 int oku_system_display_show() {
 	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_show(window);
 	return 0;
 }
 int oku_system_display_hide() {
 	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_hide(window);
 	return 0;
 }
 int oku_system_display_fullscreen() {
 	oku_system_guard(!created, oku_system_error_destroyed);
-	// window->internal.flags |= RGFW_windowedFullscreen;
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_setFlags(window, RGFW_windowFullscreen);
 	return 0;
 }
 int oku_system_display_windowed() {
 	oku_system_guard(!created, oku_system_error_destroyed);
-	// window->internal.flags &= ~RGFW_windowedFullscreen;
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_setFlags(window, 0);
 	return 0;
 }
-int oku_system_display_move() {
+int oku_system_display_borderless() {
 	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_setFlags(window, RGFW_windowedFullscreen);
 	return 0;
 }
-int oku_system_display_size() {
+int oku_system_display_move(int x, int y) {
 	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_guard(!window, oku_system_error_display);
+	RGFW_window_move(window, x, y);
+	return 0;
+}
+int oku_system_display_size(int width, int height) {
+	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_guard(!window, oku_system_error_display);
+	oku_system_guard(width <= 0 || height <= 0, oku_system_error_display);
+	RGFW_window_resize(window, width, height);
 	return 0;
 }

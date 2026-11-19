@@ -86,8 +86,9 @@
 	int oku_system_display_hide();
 	int oku_system_display_fullscreen();
 	int oku_system_display_windowed();
-	int oku_system_display_move();
-	int oku_system_display_size();
+	int oku_system_display_borderless();
+	int oku_system_display_move(int x, int y);
+	int oku_system_display_size(int width, int height);
 
 	/* ввод */
 	int oku_system_input_create();

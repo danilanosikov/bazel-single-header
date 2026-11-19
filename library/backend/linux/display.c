@@ -14,7 +14,7 @@ static RGFW_window* window = NULL;
 
 
 int oku_system_display_create() {
-	oku_system_guard(created, oku_system_error_created);
+	oku_system_assert(created, oku_system_error_created);
 	window = RGFW_createWindow("okular", 0, 0, 800, 640, RGFW_windowCenter | RGFW_windowNoResize);
 	if(!window) return oku_system_error_display;
 	return 0;
@@ -48,7 +48,7 @@ int oku_system_test_display_geometry_get(int *x, int *y, int *w, int *h) {
 }
 #endif
 int oku_system_display_update() {
-	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_assert(!created, oku_system_error_destroyed);
 	if(!window) return oku_system_error_display;
 
 	if(RGFW_window_shouldClose(window)) {
@@ -66,7 +66,7 @@ int oku_system_display_update() {
 	return 0;
 }
 int oku_system_display_destroy() {
-	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_assert(!created, oku_system_error_destroyed);
 	if(!window) return oku_system_error_display;
 	RGFW_window_close(window);
 	window = NULL;
@@ -74,45 +74,45 @@ int oku_system_display_destroy() {
 }
 
 int oku_system_display_show() {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_show(window);
 	return 0;
 }
 int oku_system_display_hide() {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_hide(window);
 	return 0;
 }
 int oku_system_display_fullscreen() {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_setFlags(window, RGFW_windowFullscreen);
 	return 0;
 }
 int oku_system_display_windowed() {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_setFlags(window, 0);
 	return 0;
 }
 int oku_system_display_borderless() {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_setFlags(window, RGFW_windowedFullscreen);
 	return 0;
 }
 int oku_system_display_move(int x, int y) {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
 	RGFW_window_move(window, x, y);
 	return 0;
 }
 int oku_system_display_size(int width, int height) {
-	oku_system_guard(!created, oku_system_error_destroyed);
-	oku_system_guard(!window, oku_system_error_display);
-	oku_system_guard(width <= 0 || height <= 0, oku_system_error_display);
+	oku_system_assert(!created, oku_system_error_destroyed);
+	oku_system_assert(!window, oku_system_error_display);
+	oku_system_assert(width <= 0 || height <= 0, oku_system_error_display);
 	RGFW_window_resize(window, width, height);
 	return 0;
 }

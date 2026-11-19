@@ -5,10 +5,17 @@
 	#endif
 
 	/* проверки состояния модуля: включаются только в тестовой сборке (//library:library_test) */
+	/* Внешний if/else нужен только для того, чтобы макрос был одним оператором
+	   в любом контексте: else без скобок «поглощает» точку с запятой вызова. */
 	#ifdef oku_system_test
-		#define oku_system_guard(condition, error) do { if(condition) return error; } while(0)
+		#define oku_system_assert(condition, error) \
+			if (1) { \
+				if (condition) { \
+					return error; \
+				} \
+			} else (void)0
 	#else
-		#define oku_system_guard(condition, error) ((void)0)
+		#define oku_system_assert(condition, error) ((void)0)
 	#endif
 
 	/* модуль */

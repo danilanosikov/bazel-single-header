@@ -51,7 +51,7 @@ static void restore_signals() {
 }
 
 int oku_system_create(callback on_create, callback on_update, callback on_destroy) {
-	oku_system_guard(created, oku_system_error_created);
+	oku_system_assert(created, oku_system_error_created);
 	create = on_create;
 	update = on_update;
 	destroy = on_destroy;
@@ -66,7 +66,7 @@ int oku_system_create(callback on_create, callback on_update, callback on_destro
 }
 
 int oku_system_destroy() {
-	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_assert(!created, oku_system_error_destroyed);
 	if(0>destroy()) return oku_system_error_destruction;
 	created = false;
 	restore_signals();
@@ -74,7 +74,7 @@ int oku_system_destroy() {
 }
 
 int oku_system_update() {
-	oku_system_guard(!created, oku_system_error_destroyed);
+	oku_system_assert(!created, oku_system_error_destroyed);
 
 	int result = update();
 	if(result>0) oku_system_exit_raise(result & oku_system_exit_all);

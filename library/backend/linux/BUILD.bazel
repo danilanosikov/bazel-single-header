@@ -67,7 +67,7 @@ _BACKEND_DEPS = [
 filegroup(
 	name = "backend_sources",
 	srcs = _BACKEND_SRCS,
-	visibility = ["//visibility:public"],
+	visibility = ["//test:__pkg__"],
 )
 
 cc_library(

@@ -39,9 +39,8 @@ tags
 # opencode - подразумевается использование, поэтому игнорируется не всё 
 opencode.json
 opencode.jsonc
-.opencode/plans/
-.opencode/*.local.json
-.opencode/*.local.jsonc
+.opencode/
+AGENTS.md
 
 # micro
 *%

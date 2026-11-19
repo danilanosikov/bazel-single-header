@@ -5,6 +5,11 @@
 # Ignore all bazel-* symlinks. There is no full list since this can change
 # based on the name of the directory bazel is cloned into.
 /bazel-*
+/external
+
+/compile_commands.json
+.vim
+.vim/
 
 # Directories for the Bazel IntelliJ plugin containing the generated
 # IntelliJ project files and plugin configuration. Separate directories are
@@ -139,15 +144,3 @@ dkms.conf
 
 # debug information files
 *.dwo
-
-**/compile_commands.json
-
-.vim
-.vim/
-**/.vim
-**/.vim/
-
-.vim-*
-.vim-*/
-**/.vim-*
-**/.vim-*/

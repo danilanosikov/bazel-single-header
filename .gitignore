@@ -23,7 +23,6 @@ imgui.ini
 
 # vim
 .vim/
-*.s[a-z][a-z]
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
 [._]s[a-rt-v][a-z]
@@ -36,7 +35,7 @@ Sessionx.vim
 tags
 [._]*.un~
 
-# opencode - подразумевается использование, поэтому игнорируется не всё 
+# opencode
 opencode.json
 opencode.jsonc
 .opencode/

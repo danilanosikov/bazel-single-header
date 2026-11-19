@@ -4,6 +4,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 # проверки состояния модуля включены только в этой сборке
 cc_library(
 	name = "backend_test",
+	testonly = True,
 	srcs = ["//library/backend/linux:backend_sources"],
 	linkopts = [
 		"-lwayland-client",
@@ -33,6 +34,7 @@ cc_library(
 
 cc_library(
 	name = "library_test",
+	testonly = True,
 	deps = [
 		":backend_test",
 		"//library:headers",

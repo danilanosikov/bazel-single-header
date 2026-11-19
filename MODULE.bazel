@@ -4,58 +4,43 @@ module(
 	version = "12111026a0"
 )
 
-
-# расширение функций для подключения зависимостей
-http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-single_header = use_repo_rule("//tool:single_header.bzl", "single_header")
-
-
-
-# зависимости
-# c23/c++23 support
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "rules_cc", version = "0.2.28")
 bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "rules_multirun", version = "0.14.0", dev_dependency = True)
+bazel_dep(name = "vulkan_headers", version = "1.4.349")
+bazel_dep(name="wayland", version="1.24.0.bcr.1")
 
-# clangd
-bazel_dep(name = "hedron_compile_commands")
-git_override(
-    module_name = "hedron_compile_commands",
-    remote = "https://github.com/helly25/bazel-compile-commands-extractor.git",
-    commit = "078ba7675c05bea2666c92d9a8abe200d8547655",
-)
-
-# wayland-protocols (последний стабильный тег 1.49)
-http_archive(
-	name = "wayland_protocols",
-	urls = ["https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.49/downloads/wayland-protocols-1.49.tar.xz"],
-	sha256 = "ec4c8f74942d6dff7ace8b4ce4764f0ef9ff618a935d974ea77edee2ad240b14",
-	strip_prefix = "wayland-protocols-1.49",
-	build_file_content = 'exports_files(glob(["**/*.xml"]))',
-)
-
-# vulkan headers (последний стабильный тег v1.4.368)
-http_archive(
-	name = "vulkan_headers",
-	urls = ["https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.4.368.tar.gz"],
-	sha256 = "5c5c6f64fcce28a24cc934143a048707af036a858e4ed11d7f71fe016006ecda",
-	strip_prefix = "Vulkan-Headers-1.4.368",
-	build_file_content = """
-load("@rules_cc//cc:defs.bzl", "cc_library")
-
-cc_library(
-	name = "vulkan",
-	hdrs = glob(["include/**"]),
-	includes = ["include"],
-	visibility = ["//visibility:public"],
-)
-""",
-)
-
-
+single_header = use_repo_rule("//tool:single_header.bzl", "single_header")
 single_header(
 	name = "rgfw",
 	header = "rgfw.h",
 	url = "https://github.com/ColleagueRiley/RGFW/releases/download/1.8.1/RGFW.h",
 	sha256 = "ece357894cf1e5d178c5343d877c4b8c66e6d0a42164b2b2e49220142700448d",
 )
+
+# clangd
+bazel_dep(name = "rules_python", version = "1.7.0", dev_dependency = True)
+git_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+git_repository(
+	name = "clangd",
+	remote = "https://github.com/helly25/bazel-compile-commands-extractor.git",
+	commit = "078ba7675c05bea2666c92d9a8abe200d8547655",
+	patch_cmds = ["sed -i 's/@hedron_compile_commands//g' refresh_compile_commands.bzl"],
+	build_file_content = """
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load(":refresh_compile_commands.bzl", "refresh_compile_commands")
+exports_files([
+    "refresh.template.py",
+    "check_python_version.template.py",
+])
+cc_binary(
+    name = "print_args",
+    srcs = ["print_args.cpp"],
+    visibility = ["//visibility:public"],
+)
+refresh_compile_commands(
+    name = "generate",
+)
+""",

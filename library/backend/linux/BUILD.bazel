@@ -57,13 +57,6 @@ _BACKEND_DEFINES = [
 	"RGFW_IMPLEMENTATION",
 ]
 
-_BACKEND_DEPS = [
-	"//library:headers",
-	":wayland",
-	"@rgfw//:rgfw",
-	"@vulkan_headers//:vulkan",
-]
-
 filegroup(
 	name = "backend_sources",
 	srcs = _BACKEND_SRCS,
@@ -76,7 +69,12 @@ cc_library(
 	linkopts = _BACKEND_LINKOPTS,
 	copts = ["-Wno-static-in-inline"],
 	defines = _BACKEND_DEFINES,
-	deps = _BACKEND_DEPS,
+	deps = [
+		"//library:headers",
+		"@wayland:wayland_scanner",
+		"@rgfw//:rgfw",
+		"@vulkan_headers//:vulkan_headers",
+	],
 	includes = ["."],
 	visibility = ["//library:__subpackages__"],
 )

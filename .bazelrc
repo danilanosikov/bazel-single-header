@@ -31,6 +31,9 @@ build:surfaceflinger --define oku_render_backend=surface-flinger
 build:asan --conlyopt=-fsanitize=address
 build:asan --linkopt=-fsanitize=address
 
+# релизная сборка (опционально: bazel build --config=release //...)
+build:release -c opt
+
 # использование всех ресурсов
 build --jobs=HOST_CPUS
 

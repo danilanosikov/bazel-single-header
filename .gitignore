@@ -1,146 +1,78 @@
-# ---> Bazel
-# gitignore template for Bazel build system
-# website: https://bazel.build/
-
-# Ignore all bazel-* symlinks. There is no full list since this can change
-# based on the name of the directory bazel is cloned into.
-/bazel-*
-/external
-
-/compile_commands.json
-/.vim
-/.vim/
-
-# Directories for the Bazel IntelliJ plugin containing the generated
-# IntelliJ project files and plugin configuration. Separate directories are
-# for the IntelliJ, Android Studio and CLion versions of the plugin.
-/.ijwb/
-/.aswb/
-/.clwb/
-
-# ---> C++
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directories
-build/
-Build/
-build-*/
-
-# CMake generated files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-install_manifest.txt 
-compile_commands.json
-
-# Temporary files
 *.tmp 
 *.log 
 *.bak 
-*.swp 
 
-# vcpkg
-vcpkg_installed/
+# bazel
+bazel-*
+external/
+user.bazelrc
 
-# debug information files
-*.dwo
-
-# test output & cache
-Testing/
+# clangd
+compile_commands.json
 .cache/
-# ---> C
-# Prerequisites
-*.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# libraries
+*.spv
+*.dxil
+*.cso
+*.metallib
+*.rdc
+*.tracy
+imgui.ini
 
-# Linker output
-*.ilk
-*.map
-*.exp
 
-# Precompiled Headers
-*.gch
-*.pch
+# vim
+.vim/
+*.s[a-z][a-z]
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+tags
+[._]*.un~
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# opencode - подразумевается использование, поэтому игнорируется не всё 
+opencode.json
+opencode.jsonc
+.opencode/plans/
+.opencode/*.local.json
+.opencode/*.local.jsonc
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# micro
+*%
+*.bak
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# zed
+.zed/
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# nano
+*~
+.*.swp
+*.save
+*.save.[0-9]*
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# vscode
+.vscode/
+.history/
+*.vsix
 
-# debug information files
-*.dwo
+
+# intellij
+.ijwb/
+.aswb/
+.clwb/
+.idea/
+.intellij/
+.clion/
+.intellij
+.clion
+*.iws
+.idea_modules/
+
+# visual studio
+.vs/

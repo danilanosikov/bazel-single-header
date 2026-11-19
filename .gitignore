@@ -41,6 +41,12 @@ opencode.jsonc
 .opencode/
 AGENTS.md
 
+# ralph
+ralph.yaml
+presets/
+.ralph/
+.agents/
+
 # micro
 *%
 *.bak

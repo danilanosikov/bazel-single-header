@@ -25,5 +25,7 @@ cc_library(
 	deps = [":headers"] + select({
 		"@platforms//os:linux": ["//library/backend/linux:backend"],
 	}),
+	# protocol interface symbols are hidden; avoid a DSO boundary.
+	linkstatic = True,
 	visibility = ["//visibility:public"],
 )

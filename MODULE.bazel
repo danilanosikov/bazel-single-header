@@ -6,11 +6,19 @@ module(
 
 bazel_dep(name = "rules_cc", version = "0.2.28")
 bazel_dep(name = "platforms", version = "1.1.0")
-bazel_dep(name = "rules_cc", version = "0.2.28")
-bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "rules_multirun", version = "0.14.0", dev_dependency = True)
 bazel_dep(name = "vulkan_headers", version = "1.4.349")
-bazel_dep(name="wayland", version="1.24.0.bcr.1")
+bazel_dep(name = "wayland", version = "1.24.0.bcr.1")
+
+# Centralized automatic generation of the six Wayland protocol headers/sources.
+protocols = use_extension("//bazel/wayland:defs.bzl", "protocols")
+protocols.config(
+    url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.49/downloads/wayland-protocols-1.49.tar.xz",
+    sha256 = "ec4c8f74942d6dff7ace8b4ce4764f0ef9ff618a935d974ea77edee2ad240b14",
+    strip_prefix = "wayland-protocols-1.49",
+    vendored_archive = "//bazel/wayland:wayland-protocols-1.49.tar.xz",
+)
+use_repo(protocols, "wayland_protocols")
 
 single_header = use_repo_rule("//tool:single_header.bzl", "single_header")
 single_header(
@@ -44,3 +52,4 @@ refresh_compile_commands(
     name = "generate",
 )
 """,
+)

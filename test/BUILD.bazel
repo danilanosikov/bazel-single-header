@@ -25,10 +25,14 @@ cc_library(
 	],
 	deps = [
 		"//library:headers",
+		"@wayland//:wayland_client",
+		"@wayland_protocols//:wayland_protocols",
 		"@rgfw//:rgfw",
-		"@vulkan_headers//:vulkan",
+		"@vulkan_headers//:vulkan_headers",
 	],
 	includes = ["../library/backend/linux"],
+	# protocol interface symbols are hidden; link consumers in one unit.
+	linkstatic = True,
 	visibility = ["//test:__subpackages__"],
 )
 
@@ -39,5 +43,7 @@ cc_library(
 		":backend_test",
 		"//library:headers",
 	],
+	# protocol interface symbols are hidden; link consumers in one unit.
+	linkstatic = True,
 	visibility = ["//test:__subpackages__"],
 )

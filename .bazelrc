@@ -20,6 +20,10 @@ build --conlyopt=-Werror
 build --conlyopt=-Wno-unused-parameter
 build --conlyopt=-Wno-unused-variable
 
+# внешний libffi (пришёл транзитивно через @wayland) помечает собственные
+# Java-raw API как устаревшие; не превращать их предупреждения в ошибки
+build --per_file_copt=external/libffi.*@-Wno-error=deprecated-declarations
+
 # бэкенд отрисовки (bazel build --config=wayland //... или --config=quartz, dwm, surfaceflinger)
 # без указания - бэкенд выбирается автоматически по операционной системе
 build:wayland --define oku_render_backend=wayland

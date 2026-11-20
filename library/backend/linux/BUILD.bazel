@@ -1,43 +1,10 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
-genrule(
-	name = "wayland",
-	srcs = [
-		"@wayland_protocols//:stable/xdg-shell/xdg-shell.xml",
-		"@wayland_protocols//:unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
-		"@wayland_protocols//:staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
-		"@wayland_protocols//:unstable/relative-pointer/relative-pointer-unstable-v1.xml",
-		"@wayland_protocols//:unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
-		"@wayland_protocols//:unstable/xdg-output/xdg-output-unstable-v1.xml",
-	],
-	outs = [
-		"xdg-shell.h",
-		"xdg-shell.c",
-		"xdg-toplevel-icon-v1.h",
-		"xdg-toplevel-icon-v1.c",
-		"xdg-decoration-unstable-v1.h",
-		"xdg-decoration-unstable-v1.c",
-		"relative-pointer-unstable-v1.h",
-		"relative-pointer-unstable-v1.c",
-		"pointer-constraints-unstable-v1.h",
-		"pointer-constraints-unstable-v1.c",
-		"xdg-output-unstable-v1.h",
-		"xdg-output-unstable-v1.c",
-	],
-	cmd = """
-		for xml in $(SRCS); do
-			out=$$(basename "$$xml" .xml)
-			wayland-scanner client-header "$$xml" "$(@D)/$$out.h"
-			wayland-scanner private-code "$$xml" "$(@D)/$$out.c"
-		done
-	""",
-)
 
 _BACKEND_SRCS = [
 	"module.c",
 	"memory.c",
 	"display.c",
 	"input.c",
-	":wayland",
 ]
 
 _BACKEND_LINKOPTS = [
@@ -71,10 +38,14 @@ cc_library(
 	defines = _BACKEND_DEFINES,
 	deps = [
 		"//library:headers",
-		"@wayland:wayland_scanner",
+		"@wayland//:wayland_client",
+		"@wayland_protocols//:wayland_protocols",
 		"@rgfw//:rgfw",
 		"@vulkan_headers//:vulkan_headers",
 	],
 	includes = ["."],
+	# generated protocol code uses hidden-visibility interface symbols; keep
+	# all objects in one link unit so consumers can resolve them.
+	linkstatic = True,
 	visibility = ["//library:__subpackages__"],
 )

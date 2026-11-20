@@ -1,0 +1,1 @@
+exports_files(["defs.bzl", "wayland-protocols-1.49.tar.xz"], visibility = ["//visibility:public"])

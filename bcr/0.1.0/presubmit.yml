@@ -1,0 +1,32 @@
+matrix:
+  platform:
+    - debian11
+    - ubuntu2204
+    - macos
+    - macos_arm64
+    - windows
+  bazel: [7.x]
+tasks:
+  verify_targets:
+    name: Verify build targets
+    platform: ${{ platform }}
+    bazel: ${{ bazel }}
+    build_targets:
+      - '@bazel-single-header//:single_header.bzl'
+bcr_test_module:
+  module_path: examples/smoke
+  matrix:
+    platform:
+      - debian11
+      - ubuntu2204
+      - macos
+      - macos_arm64
+      - windows
+    bazel: [7.x]
+  tasks:
+    run_test_module:
+      name: Run test module
+      platform: ${{ platform }}
+      bazel: ${{ bazel }}
+      test_targets:
+        - //...

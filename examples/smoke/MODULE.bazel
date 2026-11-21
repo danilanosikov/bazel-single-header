@@ -1,0 +1,18 @@
+module(name = "bazel_single_header_smoke", version = "0.0.0")
+
+bazel_dep(name = "bazel-single-header", version = "0.1.0")
+local_path_override(
+    module_name = "bazel-single-header",
+    path = "../..",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.28")
+
+single_header = use_repo_rule("@bazel-single-header//:single_header.bzl", "single_header")
+
+single_header(
+    name = "stb_c_lexer",
+    url = "https://raw.githubusercontent.com/nothings/stb/f0569113c93ad095470c54bf34a17b36646bbbb5/stb_c_lexer.h",
+    sha256 = "67aaa197e58d876ae6f7529ea5461d3af05a4bd1ad6ad03ddd28185a958dd91d",
+    header = "stb_c_lexer.h",
+)

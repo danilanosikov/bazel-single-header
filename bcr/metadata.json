@@ -1,0 +1,16 @@
+{
+  "homepage": "https://github.com/danilanosikov/bazel-single-header",
+  "maintainers": [
+    {
+      "github": "danilanosikov",
+      "name": "danilanosikov"
+    }
+  ],
+  "repository": [
+    "github:danilanosikov/bazel-single-header"
+  ],
+  "versions": [
+    "0.1.0"
+  ],
+  "yanked_versions": {}
+}

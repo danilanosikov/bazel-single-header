@@ -1,0 +1,7 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "smoke_test",
+    srcs = ["smoke.c"],
+    deps = ["@stb_c_lexer//:stb_c_lexer"],
+)

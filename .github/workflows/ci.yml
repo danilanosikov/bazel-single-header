@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Bazelisk
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-version: "1.x"
+      - name: Module graph (root)
+        run: bazel mod deps --lockfile_mode=off
+      - name: Smoke test (examples/smoke)
+        working-directory: examples/smoke
+        run: bazel test --test_output=errors //...

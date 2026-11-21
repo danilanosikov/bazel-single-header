@@ -1,18 +1,17 @@
-# uso
 common --enable_bzlmod=true
 
-# clang
+build --jobs=HOST_CPUS
+
 build --action_env=CC=clang
 build --repo_env=CC=clang
 build --compiler=clang
-
-# c23
 build --conlyopt=-std=c23
-
-# susv4 posix
 build --conlyopt=-D_XOPEN_SOURCE=700
+build --conlyopt=-Wno-gnu-zero-variadic-macro-arguments
 
-# предупреждения
+build --conlyopt=-fsanitize=address
+build --linkopt=-fsanitize=address
+
 build --conlyopt=-Wno-all
 build --conlyopt=-Wno-extra
 build --conlyopt=-Wno-pedantic
@@ -20,30 +19,4 @@ build --conlyopt=-Werror
 build --conlyopt=-Wno-unused-parameter
 build --conlyopt=-Wno-unused-variable
 
-# внешний libffi (пришёл транзитивно через @wayland) помечает собственные
-# Java-raw API как устаревшие; не превращать их предупреждения в ошибки
-build --per_file_copt=external/libffi.*@-Wno-error=deprecated-declarations
-
-# бэкенд отрисовки (bazel build --config=wayland //... или --config=quartz, dwm, surfaceflinger)
-# без указания - бэкенд выбирается автоматически по операционной системе
-build:wayland --define oku_render_backend=wayland
-build:quartz --define oku_render_backend=quartz
-build:dwm --define oku_render_backend=desktop-window-manager
-build:surfaceflinger --define oku_render_backend=surface-flinger
-
-# asan (опционально: bazel build --config=asan //...)
-build:asan --conlyopt=-fsanitize=address
-build:asan --linkopt=-fsanitize=address
-
-# релизная сборка (опционально: bazel build --config=release //...)
-build:release -c opt
-
-# использование всех ресурсов
-build --jobs=HOST_CPUS
-
-
-# __VA_ARGS__
-build --conlyopt=-Wno-gnu-zero-variadic-macro-arguments
-
-# отображать вывод проверки
 test --test_output=all

@@ -1,0 +1,38 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+	name = "release",
+	linkstatic = True,
+	srcs = select({
+		"@platforms//os:linux": ["//sources/linux:files"],
+	}),
+	defines = select({
+		"@platforms//os:linux": [
+			"oku_system=linux",
+			"oku_system_family=unix",
+			"oku_system_type=universal",
+			"oku_system_libre=true",
+			"oku_system_release",
+		],
+	}),
+	deps = [ "//headers:files" ],
+	visibility = [ "//visibility:public" ],
+)
+
+cc_library(
+	name = "development",
+	linkstatic = True,
+	srcs = select({
+		"@platforms//os:linux": ["//sources/linux:files"],
+	}),
+	defines = select({
+		"@platforms//os:linux": [
+			"oku_system=linux",
+			"oku_system_family=unix",
+			"oku_system_type=universal",
+			"oku_system_libre=true",
+		],
+	}),
+	deps = [ "//headers:files" ],
+	visibility = [ "//visibility:public" ],
+)

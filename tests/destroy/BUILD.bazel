@@ -1,0 +1,52 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+# @описание: общие зависимости для всех тестов
+DEPEND = [
+	"//tests:common",
+	"//tests/host:ram",
+	"//headers:files",
+	"//sources:development"
+]
+
+# @описание: проверка первого вызова функции уничтожение памяти
+cc_test(
+	name = "first",
+	srcs = ["0.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)
+# @описание: передача некорректных адресов
+cc_test(
+	name = "invalid_address",
+	srcs = ["1.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)
+# @описание: проверка вызова функции при повторном вызове без предварительной отчитски
+cc_test(
+	name = "repeat_no_cleanup",
+	srcs = ["2.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)
+# @описание: проверка вызова функции при повторном вызове с предварительной отчитской
+cc_test(
+	name = "repeat_cleanup",
+	srcs = ["3.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)
+# @описание: проверка соотвестствия зарезервированной и освобождённой памяти
+cc_test(
+	name = "size_match",
+	srcs = ["4.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)
+# @описание: проверка не соотвестствия зарезервированной и освобождённой памяти
+cc_test(
+	name = "size_mismatch",
+	srcs = ["5.c", "//tests:common"],
+	deps = DEPEND,
+	tags = ["local"],
+)

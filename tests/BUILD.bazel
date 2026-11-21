@@ -1,0 +1,8 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+cc_library(
+	name = "common",
+	hdrs = ["common.h"],
+	includes = ["."],
+	deps = ["//headers:files", "//sources:development"],
+	visibility = [ "//tests:__subpackages__" ],
+)

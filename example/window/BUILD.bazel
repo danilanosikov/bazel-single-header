@@ -1,8 +1,0 @@
-# @описание: пример
-load("@rules_cc//cc:defs.bzl", "cc_binary")
-
-cc_binary(
-	name = "create",
-	srcs = ["run.c"],
-	deps = ["//library:library"],
-)

@@ -1,5 +1,5 @@
 {
-  "integrity": "sha256-<REPLACE_WITH_BASE64_SRI_OF_v0.1.0_ARCHIVE>",
+  "integrity": "sha256-KJ1nAIepFJwjWfVPyX3+mX4xWyCht+4g/IT1jR0EZ7o=",
   "strip_prefix": "bazel-single-header-0.1.0",
   "url": "https://github.com/danilanosikov/bazel-single-header/archive/refs/tags/v0.1.0.tar.gz"
 }
